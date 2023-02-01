@@ -6,21 +6,21 @@ SELECT * FROM tv_shows;
 # Q1- Which streaming platform(s) can I find this tv show on?
 SELECT
 	Title,
-    CASE
+    	CASE
 		WHEN Netflix = 1 AND Hulu = 1 AND Prime_Video = 0 AND Disney = 0 THEN "On Netflix and Hulu"
-        WHEN Netflix = 1 AND Prime_Video = 1 AND Hulu = 0 AND Disney = 0 THEN "On Netflix and Prime Video"
-        WHEN Netflix = 1 AND Hulu = 1 AND Prime_Video = 1 AND Disney = 0 THEN "On Netflix, Hulu, and Prime Video"
-        WHEN Hulu = 1 AND Prime_Video = 1 AND Netflix = 0 AND Disney = 0 THEN "On Hulu and Prime Video"
+        	WHEN Netflix = 1 AND Prime_Video = 1 AND Hulu = 0 AND Disney = 0 THEN "On Netflix and Prime Video"
+        	WHEN Netflix = 1 AND Hulu = 1 AND Prime_Video = 1 AND Disney = 0 THEN "On Netflix, Hulu, and Prime Video"
+        	WHEN Hulu = 1 AND Prime_Video = 1 AND Netflix = 0 AND Disney = 0 THEN "On Hulu and Prime Video"
 		WHEN Netflix = 1 AND Hulu = 0 AND Prime_Video = 0 AND Disney = 0 THEN "On Netflix"
-        WHEN Hulu = 1 AND Netflix = 0 AND Prime_Video = 0 AND Disney = 0 THEN "On Hulu"
-        WHEN Prime_video = 1 AND Netflix = 0 AND Hulu = 0 AND Disney = 0 THEN "On Prime Video"
-        WHEN Disney = 1 AND Netflix = 0 AND Hulu = 0 AND Prime_Video = 0 THEN "On Disney"
-        WHEN Disney = 1 AND Netflix = 1 AND Hulu = 1 AND Prime_Video = 1 THEN "On Disney, Netflix, Hulu, and Prime Video"
-        WHEN Disney = 1 AND Netflix = 1 AND Hulu = 1 AND Prime_Video = 0 THEN "On Disney, Netflix, and Hulu"
-        WHEN Disney = 1 AND Netflix = 1 AND Hulu = 0 AND Prime_Video = 0 THEN "On Disney and Netflix"
-        WHEN Disney = 1 AND Netflix = 0 AND Hulu = 1 AND Prime_Video = 0 THEN "On Disney and Hulu"
-        WHEN Disney = 1 AND Netflix = 0 AND Hulu = 0 AND Prime_Video = 1 THEN "On Disney and Prime Video"
-        ELSE "On no platform"
+        	WHEN Hulu = 1 AND Netflix = 0 AND Prime_Video = 0 AND Disney = 0 THEN "On Hulu"
+		WHEN Prime_video = 1 AND Netflix = 0 AND Hulu = 0 AND Disney = 0 THEN "On Prime Video"
+        	WHEN Disney = 1 AND Netflix = 0 AND Hulu = 0 AND Prime_Video = 0 THEN "On Disney"
+        	WHEN Disney = 1 AND Netflix = 1 AND Hulu = 1 AND Prime_Video = 1 THEN "On Disney, Netflix, Hulu, and Prime Video"
+        	WHEN Disney = 1 AND Netflix = 1 AND Hulu = 1 AND Prime_Video = 0 THEN "On Disney, Netflix, and Hulu"
+        	WHEN Disney = 1 AND Netflix = 1 AND Hulu = 0 AND Prime_Video = 0 THEN "On Disney and Netflix"
+        	WHEN Disney = 1 AND Netflix = 0 AND Hulu = 1 AND Prime_Video = 0 THEN "On Disney and Hulu"
+        	WHEN Disney = 1 AND Netflix = 0 AND Hulu = 0 AND Prime_Video = 1 THEN "On Disney and Prime Video"
+        	ELSE "On no platform"
 	END AS "Platform"
 FROM tv_shows;
 
@@ -30,30 +30,30 @@ FROM tv_shows;
 WITH nrat AS (
 	SELECT
 		Age,
-        ROUND(COUNT(*) / SUM(COUNT(*)) OVER() * 100, 2) AS perc_ageN
+        	ROUND(COUNT(*) / SUM(COUNT(*)) OVER() * 100, 2) AS perc_ageN
 	FROM tv_shows
-    WHERE Netflix = 1
-    GROUP BY Age)
-    , hrat AS (
+	WHERE Netflix = 1
+	GROUP BY Age)
+	, hrat AS (
 	SELECT
 		Age,
 		ROUND(COUNT(*)/ SUM(COUNT(*)) OVER() * 100, 2) AS perc_ageH
 	FROM tv_shows
 	WHERE Hulu = 1
 	GROUP BY Age)
-    , pvrat AS (
-    SELECT
+	, pvrat AS (
+	SELECT
 		Age,
-        ROUND(COUNT(*)/ SUM(COUNT(*)) OVER() * 100, 2) AS perc_agePV
+        	ROUND(COUNT(*)/ SUM(COUNT(*)) OVER() * 100, 2) AS perc_agePV
 	FROM tv_shows
-    WHERE Prime_Video = 1
-    GROUP BY age)
+		WHERE Prime_Video = 1
+		GROUP BY age)
 
 SELECT 
 	nrat.Age,
-    nrat.perc_ageN,
-    hrat.perc_ageH,
-    pvrat.perc_agePV
+	nrat.perc_ageN,
+    	hrat.perc_ageH,
+    	pvrat.perc_agePV
 FROM nrat
 LEFT JOIN hrat
 ON nrat.Age = hrat.Age
@@ -63,22 +63,22 @@ ON nrat.Age = pvrat.Age;
 # Q3- The year during which a tv show was produced and the streaming platform they can be found on
 SELECT
 	Title,
-    YEAR(Year),
-    CASE
+    	YEAR(Year),
+    	CASE
 		WHEN Netflix = 1 AND Hulu = 1 AND Prime_Video = 0 AND Disney = 0 THEN "On Netflix and Hulu"
-        WHEN Netflix = 1 AND Prime_Video = 1 AND Hulu = 0 AND Disney = 0 THEN "On Netflix and Prime Video"
-        WHEN Netflix = 1 AND Hulu = 1 AND Prime_Video = 1 AND Disney = 0 THEN "On Netflix, Hulu, and Prime Video"
-        WHEN Hulu = 1 AND Prime_Video = 1 AND Netflix = 0 AND Disney = 0 THEN "On Hulu and Prime Video"
+        	WHEN Netflix = 1 AND Prime_Video = 1 AND Hulu = 0 AND Disney = 0 THEN "On Netflix and Prime Video"
+        	WHEN Netflix = 1 AND Hulu = 1 AND Prime_Video = 1 AND Disney = 0 THEN "On Netflix, Hulu, and Prime Video"
+        	WHEN Hulu = 1 AND Prime_Video = 1 AND Netflix = 0 AND Disney = 0 THEN "On Hulu and Prime Video"
 		WHEN Netflix = 1 AND Hulu = 0 AND Prime_Video = 0 AND Disney = 0 THEN "On Netflix"
-        WHEN Hulu = 1 AND Netflix = 0 AND Prime_Video = 0 AND Disney = 0 THEN "On Hulu"
-        WHEN Prime_video = 1 AND Netflix = 0 AND Hulu = 0 AND Disney = 0 THEN "On Prime Video"
-        WHEN Disney = 1 AND Netflix = 0 AND Hulu = 0 AND Prime_Video = 0 THEN "On Disney"
-        WHEN Disney = 1 AND Netflix = 1 AND Hulu = 1 AND Prime_Video = 1 THEN "On Disney, Netflix, Hulu, and Prime Video"
-        WHEN Disney = 1 AND Netflix = 1 AND Hulu = 1 AND Prime_Video = 0 THEN "On Disney, Netflix, and Hulu"
-        WHEN Disney = 1 AND Netflix = 1 AND Hulu = 0 AND Prime_Video = 0 THEN "On Disney and Netflix"
-        WHEN Disney = 1 AND Netflix = 0 AND Hulu = 1 AND Prime_Video = 0 THEN "On Disney and Hulu"
-        WHEN Disney = 1 AND Netflix = 0 AND Hulu = 0 AND Prime_Video = 1 THEN "On Disney and Prime Video"
-        ELSE "On no platform"
+        	WHEN Hulu = 1 AND Netflix = 0 AND Prime_Video = 0 AND Disney = 0 THEN "On Hulu"
+        	WHEN Prime_video = 1 AND Netflix = 0 AND Hulu = 0 AND Disney = 0 THEN "On Prime Video"
+        	WHEN Disney = 1 AND Netflix = 0 AND Hulu = 0 AND Prime_Video = 0 THEN "On Disney"
+        	WHEN Disney = 1 AND Netflix = 1 AND Hulu = 1 AND Prime_Video = 1 THEN "On Disney, Netflix, Hulu, and Prime Video"
+        	WHEN Disney = 1 AND Netflix = 1 AND Hulu = 1 AND Prime_Video = 0 THEN "On Disney, Netflix, and Hulu"
+        	WHEN Disney = 1 AND Netflix = 1 AND Hulu = 0 AND Prime_Video = 0 THEN "On Disney and Netflix"
+        	WHEN Disney = 1 AND Netflix = 0 AND Hulu = 1 AND Prime_Video = 0 THEN "On Disney and Hulu"
+        	WHEN Disney = 1 AND Netflix = 0 AND Hulu = 0 AND Prime_Video = 1 THEN "On Disney and Prime Video"
+        	ELSE "On no platform"
 	END AS "Platform"
 FROM tv_shows;
 
@@ -89,15 +89,15 @@ SELECT DISTINCT COUNT(id) FROM tv_shows;
 # exported
 SELECT
 	SUM(IF(Netflix = 1, 1, 0)) AS Net_shows,
-    SUM(IF(Hulu = 1, 1, 0)) AS Hulu_shows,
-    SUM(IF(Prime_Video = 1, 1, 0)) AS PV_shows
+    	SUM(IF(Hulu = 1, 1, 0)) AS Hulu_shows,
+    	SUM(IF(Prime_Video = 1, 1, 0)) AS PV_shows
 FROM tv_shows;
 
 # year range
 SELECT 
 	COUNT(DISTINCT Year),
-    MAX(Year),
-    MIN(Year)
+    	MAX(Year),
+    	MIN(Year)
 FROM tv_shows; 
 
 # max, min AND avg ratings
@@ -124,36 +124,33 @@ FROM ratings;
 WITH nrat AS (
 	SELECT
 		Age,
-        ROUND(AVG(CAST(SUBSTR(IMDb, 1, LOCATE("/", IMDb)-1) AS DECIMAL(4,2))), 2) AS avg_imdbN,
-        ROUND(AVG(cASt(SUBSTR(Rotten_Tomatoes, 1, LOCATE("/", Rotten_Tomatoes)-1) AS DECIMAL(5,2))), 2) AS avg_rtN
-	FROM
-		tv_shows
+        	ROUND(AVG(CAST(SUBSTR(IMDb, 1, LOCATE("/", IMDb)-1) AS DECIMAL(4,2))), 2) AS avg_imdbN,
+        	ROUND(AVG(cASt(SUBSTR(Rotten_Tomatoes, 1, LOCATE("/", Rotten_Tomatoes)-1) AS DECIMAL(5,2))), 2) AS avg_rtN
+	FROM tv_shows
 	WHERE Netflix = 1
-    GROUP BY Age)
-    , hrat AS (
-    SELECT
+    	GROUP BY Age)
+    	, hrat AS (
+    	SELECT
 		Age, 
-        ROUND(AVG(CAST(SUBSTR(IMDb, 1, LOCATE("/", IMDb)-1) AS DECIMAL(4,2))), 2) AS avg_imdbH,
-        ROUND(AVG(CAST(SUBSTR(Rotten_Tomatoes, 1, LOCATE("/", Rotten_Tomatoes)-1) AS DECIMAL(5,2))), 2) AS avg_rtH
-	FROM
-		tv_shows
+        	ROUND(AVG(CAST(SUBSTR(IMDb, 1, LOCATE("/", IMDb)-1) AS DECIMAL(4,2))), 2) AS avg_imdbH,
+        	ROUND(AVG(CAST(SUBSTR(Rotten_Tomatoes, 1, LOCATE("/", Rotten_Tomatoes)-1) AS DECIMAL(5,2))), 2) AS avg_rtH
+	FROM tv_shows
 	WHERE Hulu = 1
-    GROUP BY Age)
-    , pvrat AS(
-    SELECT
+    	GROUP BY Age)
+    	, pvrat AS(
+    	SELECT
 		Age,
-        ROUND(AVG(CAST(SUBSTR(IMDb, 1, LOCATE("/", IMDb)-1) AS DECIMAL(4,2))), 2) AS avg_imdbPV,
-        ROUND(AVG(CAST(SUBSTR(Rotten_Tomatoes, 1, LOCATE("/", Rotten_Tomatoes)-1) AS DECIMAL(5,2))), 2) AS avg_rtPV
-	FROM
-		tv_shows
+        	ROUND(AVG(CAST(SUBSTR(IMDb, 1, LOCATE("/", IMDb)-1) AS DECIMAL(4,2))), 2) AS avg_imdbPV,
+        	ROUND(AVG(CAST(SUBSTR(Rotten_Tomatoes, 1, LOCATE("/", Rotten_Tomatoes)-1) AS DECIMAL(5,2))), 2) AS avg_rtPV
+	FROM tv_shows
 	WHERE Prime_Video = 1
-    GROUP BY Age)
+    	GROUP BY Age)
 
 SELECT 
 	nrat.Age,
-    nrat.avg_imdbN, nrat.avg_rtN,
-    hrat.avg_imdbH, hrat.avg_rtH,
-    pvrat.avg_imdbPV, pvrat.avg_rtPV
+    	nrat.avg_imdbN, nrat.avg_rtN,
+    	hrat.avg_imdbH, hrat.avg_rtH,
+    	pvrat.avg_imdbPV, pvrat.avg_rtPV
 FROM nrat
 LEFT JOIN hrat
 ON nrat.Age = hrat.Age
@@ -164,18 +161,18 @@ ON nrat.Age = pvrat.Age;
 # exported
 SELECT
 	Year(Year),
-    ROUND(avg(CAST(SUBSTR(IMDb, 1, LOCATE("/", IMDb)-1) AS DECIMAL(4,2))), 2) AS avg_imdb
+    	ROUND(avg(CAST(SUBSTR(IMDb, 1, LOCATE("/", IMDb)-1) AS DECIMAL(4,2))), 2) AS avg_imdb
 FROM tv_shows
 GROUP BY year
-order BY avg_imdb desc
-limit 5;
+ORDER BY avg_imdb DESC
+lIMIT 5;
 
 # highest rated years - overall - rotten tomatoes
 #exported
 SELECT
 	Year(Year),
-    ROUND(avg(CAST(SUBSTR(Rotten_Tomatoes, 1, LOCATE("/", Rotten_Tomatoes)-1) AS DECIMAL(5,2))), 2) AS avg_rt
+    	ROUND(avg(CAST(SUBSTR(Rotten_Tomatoes, 1, LOCATE("/", Rotten_Tomatoes)-1) AS DECIMAL(5,2))), 2) AS avg_rt
 FROM tv_shows
 GROUP BY year
-order BY avg_rt desc
-limit 5;
+ORDER BY avg_rt DESC
+LIMIT 5;
