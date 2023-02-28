@@ -1,4 +1,4 @@
-# TV Shows
+# Streaming Platform Content
 
 **Tools:** SQL, Tableau <br />
 **SQL Functions and Statements:** Aggregation Functions, CASE WHEN statements, CTEs, CAST(), SUBSTR(), LOCATE() <br />
@@ -13,7 +13,7 @@
 * Provided descriptive statistics of shows across the three platforms. 
 <br />
 
-**Deliverables:** [Tableau Dashboard](https://public.tableau.com/app/profile/vanessa4875/viz/TVShows_16638992763940/PlatformContent) <br />
+**Deliverables:** [Tableau Dashboard](https://public.tableau.com/app/profile/vanessa4875/viz/StreamingPlatformContent/PlatformContent) <br />
 
 **Link to SQL Script in this repository:** [SQL Script](https://github.com/vanessa-guzman/tv_shows/blob/main/SQL-Script--tv_shows.sql)
 
