@@ -61,14 +61,16 @@ FROM platforms
 GROUP BY Platform;
 
 # percentage of shows on each platform- by Age rating
-SELECT Platform, Age, 
+SELECT Platform, 
+	Age, 
 	ROUND(count(*)/ sum(count(*)) OVER(PARTITION BY Platform) * 100, 2) AS Percentage
 FROM platforms
 GROUP BY Platform, Age
 ORDER BY Platform;
 
 # average rating by age on all platforms 
-SELECT Platform, Age,
+SELECT Platform, 
+	Age,
 	ROUND(AVG(CAST(SUBSTR(IMDb, 1, LOCATE("/", IMDb)-1) AS DECIMAL(4,2))), 2) AS avg_imdb,
 	ROUND(AVG(CAST(SUBSTR(Rotten_Tomatoes, 1, LOCATE("/", Rotten_Tomatoes)-1) AS DECIMAL(5,2))), 2) AS avg_rt
 FROM platforms
@@ -78,11 +80,10 @@ ORDER BY Platform;
 # highest rated years imdb
 SELECT
 	Year,
-    ROUND(AVG(CAST(SUBSTR(IMDb, 1, LOCATE("/", IMDb)-1) AS DECIMAL(4,2))), 2) AS avg_imdb
-FROM
-(
-SELECT DISTINCT ID, Year, IMDb
-FROM platforms) AS platforms
+	ROUND(AVG(CAST(SUBSTR(IMDb, 1, LOCATE("/", IMDb)-1) AS DECIMAL(4,2))), 2) AS avg_imdb
+FROM(
+	SELECT DISTINCT ID, Year, IMDb
+	FROM platforms) AS platforms
 GROUP BY Year
 ORDER BY avg_imdb DESC
 LIMIT 5;
@@ -90,10 +91,10 @@ LIMIT 5;
 # highest rated years rotten tomatoes
 SELECT
 	Year,
-    ROUND(AVG(CAST(SUBSTR(Rotten_Tomatoes, 1, LOCATE("/", Rotten_Tomatoes)-1) AS DECIMAL(5,2))), 2) AS avg_rt
+	ROUND(AVG(CAST(SUBSTR(Rotten_Tomatoes, 1, LOCATE("/", Rotten_Tomatoes)-1) AS DECIMAL(5,2))), 2) AS avg_rt
 FROM (
-SELECT DISTINCT ID, Year, Rotten_Tomatoes
-FROM platforms) AS platforms
+	SELECT DISTINCT ID, Year, Rotten_Tomatoes
+	FROM platforms) AS platforms
 GROUP BY Year
 ORDER BY avg_rt DESC
 LIMIT 5;
